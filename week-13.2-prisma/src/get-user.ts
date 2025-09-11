@@ -1,6 +1,6 @@
 import { prisma } from "./index.js";
 
-const create_users = async () => {
+const get_user = async () => {
   try {
     const User_Many = await prisma.user.findMany({}) // Get All User In Databse
     const User = await prisma.user.findMany({
@@ -19,4 +19,4 @@ const create_users = async () => {
   }
 };
 
-create_users();
+get_user();

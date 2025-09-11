@@ -1,6 +1,6 @@
 import { prisma } from "./index.js";
 
-const create_users = async () => {
+const get_post = async () => {
   try {
     const All_Posts  = await prisma.post.findMany({
         include: {
@@ -22,4 +22,4 @@ const create_users = async () => {
   }
 };
 
-create_users();
+get_post();

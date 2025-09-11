@@ -1,6 +1,6 @@
 import { prisma } from "./index.js";
 
-const create_users = async () => {
+const create_both = async () => {
   try {
     const UserWithPosts = await prisma.user.create({
       data: {
@@ -27,4 +27,4 @@ const create_users = async () => {
   }
 };
 
-create_users();
+create_both();
