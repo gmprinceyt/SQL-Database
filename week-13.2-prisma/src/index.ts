@@ -1,20 +1,2 @@
 import { PrismaClient } from "../generated/prisma/index.js";
-
-
-const prisma = new PrismaClient();
-
-async function main() {
- const posts = await prisma.post.findMany({})
- console.dir(posts, {depth: null})
-}
-
-
-main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+export const prisma = new PrismaClient();
