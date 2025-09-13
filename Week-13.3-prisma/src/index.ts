@@ -3,49 +3,16 @@ import express, {
   type Request,
   type Response,
 } from "express";
-import { Connect, prisma } from "./db/prisma.js";
-import type { UserCreateQuery } from "./type.js";
+import { Connect } from "./db/prisma.js";
+import Router from "./routes/index.js";
+
+
+
 const app = express();
+
+// Middlewares
 app.use(express.json());
-
-// Craete Users
-app.post("/user/create", async (req: Request<{}, {}, UserCreateQuery>, res, next) => {
-  try {
-    // Vailidation Check ?
-    const { email, firstName, password, lastName } = req.body;
-
-
-    // Check Existing User;
-    const  IsExistUser= await prisma.user.findUnique({
-        where: {email},
-        select: {id: true}
-    });
-
-    if (IsExistUser) {
-        return next(new Error("User Allready Exsited!"))
-    }
-
-    const user = await prisma.user.create({
-      data: {
-        email,
-        password,
-        firstName,
-        lastName,
-      },
-      select: {
-        email: true,
-        firstName: true,
-      },
-    });
-
-    res.status(201).json({
-      message: "User Created",
-      user,
-    });
-  } catch (error) {
-    next(error)
-  }
-});
+app.use("/api/v1", Router);
 
 
 
@@ -63,7 +30,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-// Connection Instance
+// Connection
 const port = Number(process.env.SERVER_PORT) || 4000;
 function Server() {
   try {
