@@ -1,4 +1,4 @@
-import jwt, { JsonWebTokenError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 /**
  * inside req.headers.authorization;
  * Authorization - Bearer token
@@ -12,7 +12,7 @@ export const Auth = async (req, res, next) => {
     //Token Check
     const token = authHeader.split(" ")[1];
     if (!token) {
-        return next(new JsonWebTokenError("Token Failed!"));
+        return next(new Error("Token Failed!"));
     }
     // Jwt
     const JWT_SECRET = process.env.JWT_SECRET;

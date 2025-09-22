@@ -3,7 +3,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 const UserRoute = Router();
 // Craete Users
-UserRoute.post("/create", async (req, res, next) => {
+UserRoute.post("/register", async (req, res, next) => {
     try {
         // Pending -  Vailidation Check ?
         const { email, firstName, password, lastName } = req.body;

@@ -1,5 +1,5 @@
 import type { NextFunction, Response,Request } from "express";
-import jwt, { JsonWebTokenError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 /**
  * inside req.headers.authorization;
@@ -21,7 +21,7 @@ export  const Auth = async (
   //Token Check
   const token = authHeader.split(" ")[1];
   if (!token) {
-    return next(new JsonWebTokenError("Token Failed!"));
+    return next(new Error("Token Failed!"));
   }
 
   // Jwt
