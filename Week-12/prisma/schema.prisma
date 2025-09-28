@@ -16,6 +16,7 @@ model Users {
   email String @unique  
   password String 
   phone Int 
+  todos Todo[]
 }
 
 model Todo {
@@ -23,5 +24,6 @@ model Todo {
   title String
   description String?
   done Boolean @default(false)
-  user_id Int 
+  user_id String 
+  user Users @relation(fields: [user_id], references: [id])
 }

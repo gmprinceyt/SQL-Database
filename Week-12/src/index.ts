@@ -24,3 +24,34 @@ async function insertDataIntoUsers(
 }
 
 insertDataIntoUsers("Prince", "prince@gmail.com", "PRINCE", 987654321);
+
+async function getTodos(userId:number){
+  try {
+    const response = await prisma.todo.findMany({
+      where: {userId}
+    });
+    console.log(response)
+  } catch (error){
+    console.log(error)
+  }
+}
+getTodos(1);
+
+
+async function getTodosWithUser(userId: number){
+  try {
+    const response = await prisma.todo.findMany({
+      where: {userId},
+      select: {
+        title: true,
+        description: true,
+        done: true,
+        user: true // Join User Data with todos
+      }
+    })
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+getTodosWithUser(1);
