@@ -3,14 +3,9 @@ interface User {
   email: string;
 }
 async function getUserData() {
-  const response = await new Promise<User>((res) => {
-   setTimeout(()=> res({
-      name: "Prince",
-      email: "gmprince420@gmail.com",
-    }), 1000)
-  });
-
-  return response;
+  const response = await fetch("http://localhost:3000/api/user");
+  const data = await response.json()
+  return data;
 }
 
 export default async function Home() {
