@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import Loader from "./Loader";
 
 interface User {
   email: string;
@@ -34,36 +35,54 @@ export default function Signup() {
   }
 
   return (
-    <div className="max-w-7xl h-screen mx-auto text-black ">
+    <div className="max-w-7xl h-screen mx-auto text-black px-7">
       <form
+        className=" h-full w-full  flex flex-col justify-center items-center gap-4   "
         onSubmit={SubmitHandler}
-        className="flex flex-col h-full  justify-center items-center"
       >
-        <input
-          onChange={(e) => setUser((p) => ({ ...p, email: e.target.value }))}
-          placeholder="Type Email "
-          className="outline-blue-400 rounded-md border-2 border-slate-500 py-2 w-1/3 px-3 m-2"
-          type="email"
-          name="email"
-        />
-        <input
-          onChange={(e) => setUser((p) => ({ ...p, name: e.target.value }))}
-          placeholder="Type Fullname "
-          className="outline-blue-400 rounded-md border-2 border-slate-500 py-2 w-1/3 px-3 m-2"
-          type="text"
-          name="name"
-        />
+        <div className="lg:w-1/3 w-full">
+          <label
+            htmlFor="email"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Enter your email address
+          </label>
+          <input
+            onChange={(e) => setUser((p) => ({ ...p, email: e.target.value }))}
+            type="email"
+            id="email"
+            name="email"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            placeholder="abc@gmail.com"
+            required
+          />
+        </div>
+        <div className="lg:w-1/3 w-full">
+          <label
+            htmlFor="name"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Enter your fullname
+          </label>
+          <input
+            onChange={(e) => setUser((p) => ({ ...p, name: e.target.value }))}
+            type="text"
+            id="name"
+            name="name"
+            className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            placeholder="Joun Doe"
+            required
+          />
+        </div>
 
-        <button
-          className="bg-gray-900 rounded-xl px-9 py-2 hover:bg-gray-700 text-white border-2 "
-          type="submit"
-        >
-          {response.Isloading ? (
-            <div className="animate-pulse text-xl">...</div>
-          ) : (
-            "Signup"
-          )}
-        </button>
+        <div className="lg:w-1/3 w-full">
+          <button
+            type="submit"
+            className="text-white  bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg w-full text-sm px-5 py-2.5"
+          >
+            {response.Isloading ? <Loader /> : "Signup"}
+          </button>
+        </div>
       </form>
     </div>
   );
