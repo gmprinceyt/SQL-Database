@@ -14,8 +14,8 @@ export default async function Home() {
   return (
     <div className="w-full  h-screen  flex  justify-center items-center ">
       <div className="">
-        <div className="">{user.name}</div>
-      <div className="">{user.email}</div>
+        <div className="">{user?.username}</div>
+      <div className="">{user?.password}</div>
       </div>
     </div>
   );

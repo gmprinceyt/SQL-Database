@@ -1,15 +1,11 @@
 import { FormEvent, useState } from "react";
 import Loader from "./Loader";
 
-interface User {
-  email: string;
-  name: string;
-}
 
 export default function Signup() {
-  const [user, setUser] = useState<User>({
-    email: "",
-    name: "",
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
   });
   const [response, setResponse] = useState({
     data: undefined,
@@ -48,7 +44,7 @@ export default function Signup() {
             Enter your email address
           </label>
           <input
-            onChange={(e) => setUser((p) => ({ ...p, email: e.target.value }))}
+            onChange={(e) => setUser((p) => ({ ...p, username: e.target.value }))}
             type="email"
             id="email"
             name="email"
@@ -62,11 +58,11 @@ export default function Signup() {
             htmlFor="name"
             className="block mb-2 text-sm font-medium text-gray-900"
           >
-            Enter your fullname
+            Enter your password
           </label>
           <input
-            onChange={(e) => setUser((p) => ({ ...p, name: e.target.value }))}
-            type="text"
+            onChange={(e) => setUser((p) => ({ ...p, password: e.target.value }))}
+            type="password"
             id="name"
             name="name"
             className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
