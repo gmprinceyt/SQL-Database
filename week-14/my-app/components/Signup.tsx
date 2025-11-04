@@ -1,41 +1,59 @@
 import { FormEvent, useState } from "react";
 import Loader from "./Loader";
+import { SigninUser } from "@/app/actions/user";
 
+interface ResponseType {
+  Isloading: boolean;
+  data: undefined | string;
+  error: string;
+}
 
 export default function Signup() {
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
-  const [response, setResponse] = useState({
-    data: undefined,
+  const [response, setResponse] = useState<ResponseType>({
     Isloading: false,
+    data: undefined,
     error: "",
   });
 
-  function SubmitHandler(e: FormEvent<HTMLFormElement>) {
+  async function SubmitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(e.target);
     setResponse((p) => ({ ...p, Isloading: true }));
-    fetch("http://localhost:3000/api/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => response.json())
-      .then((data) => setResponse((p) => ({ ...p, data })))
-      .catch((error) => setResponse((p) => ({ ...p, error })))
-      .finally(() => setResponse((p) => ({ ...p, Isloading: false })));
-  }
 
+    try {
+      const res = await SigninUser(user);
+      if (res === "User Create Successfully!") {
+        setResponse((p) => ({ ...p, data: res }));
+        alert(res);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setResponse((p) => ({ ...p, error: error.message }));
+      }
+    } finally {
+      setResponse((p) => ({ ...p, Isloading: false }));
+    }
+  }
   return (
-    <div className="max-w-7xl h-screen mx-auto text-black px-7">
+    <div className="max-w-7xl h-screen mx-auto flex items-center justify-center flex-col text-black px-7">
+      <h1 className="text-6xl leading-9 tracking-tight text-center font-extrabold  ">Feel free to Signin your account with secure data </h1>
+      {/* Alert */}
+      <div
+        className="mb-4 text-sm text-red-800 rounded-lg bg-red-50"
+        role="alert"
+        >
+          </div>
       <form
-        className=" h-full w-full  flex flex-col justify-center items-center gap-4   "
+        className="w-full"
         onSubmit={SubmitHandler}
       >
+
+          {response.error}
+
+        {/* inputs */}
         <div className="lg:w-1/3 w-full">
           <label
             htmlFor="email"
@@ -44,7 +62,9 @@ export default function Signup() {
             Enter your email address
           </label>
           <input
-            onChange={(e) => setUser((p) => ({ ...p, username: e.target.value }))}
+            onChange={(e) =>
+              setUser((p) => ({ ...p, username: e.target.value }))
+            }
             type="email"
             id="email"
             name="email"
@@ -61,7 +81,9 @@ export default function Signup() {
             Enter your password
           </label>
           <input
-            onChange={(e) => setUser((p) => ({ ...p, password: e.target.value }))}
+            onChange={(e) =>
+              setUser((p) => ({ ...p, password: e.target.value }))
+            }
             type="password"
             id="name"
             name="name"
@@ -70,11 +92,10 @@ export default function Signup() {
             required
           />
         </div>
-
-        <div className="lg:w-1/3 w-full">
+        <div className="lg:w-1/3 mt-4 w-full">
           <button
             type="submit"
-            className="text-white  bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg w-full text-sm px-5 py-2.5"
+            className="text-white   bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg w-full text-sm px-5 py-2.5"
           >
             {response.Isloading ? <Loader /> : "Signup"}
           </button>

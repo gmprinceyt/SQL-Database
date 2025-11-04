@@ -1,11 +1,8 @@
-interface User {
-  name: string;
-  email: string;
-}
+import Link from "next/link";
+import client from "./db";
 async function getUserData() {
-  const response = await fetch("http://localhost:3000/api/user");
-  const data = await response.json()
-  return data;
+  const user = await client.user.findFirst({});
+  return user;
 }
 
 export default async function Home() {
@@ -13,10 +10,12 @@ export default async function Home() {
 
   return (
     <div className="w-full  h-screen  flex  justify-center items-center ">
-      <div className="">
-        <div className="">{user?.username}</div>
-      <div className="">{user?.password}</div>
+      <Link href={"/signup"}>
+      <div className="border px-2 py-4 border-slate-300 ">
+        <div className="">Email: {user?.username}</div>
+        <div className="">Password: {user?.password}</div>
       </div>
+      </Link>
     </div>
   );
 }
